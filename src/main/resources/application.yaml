@@ -1,0 +1,40 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+      - org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration
+  application:
+    name: demo-users
+
+server:
+  port: 8080
+
+app:
+  data-sources:
+    - name: data-base-1
+      strategy: postgres
+      url: jdbc:postgresql://postgres1:5432/db1
+      table: users
+      user: testuser
+      password: testpass
+      mapping:
+        id: user_id
+        username: login
+        name: first_name
+        surname: last_name
+    - name: data-base-2
+      strategy: postgres
+      url: jdbc:postgresql://postgres2:5432/db2
+      table: user_table
+      user: testuser
+      password: testpass
+      mapping:
+        id: ldap_login
+        username: ldap_login
+        name: name
+        surname: surname
+
+logging:
+  level:
+    com.example.demo_user: INFO

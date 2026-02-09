@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres1:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_USER: testuser
+      POSTGRES_DB: db1
+    ports: [ "5433:5432" ]
+    volumes:
+      - ./docker/init/db1:/docker-entrypoint-initdb.d
+
+  postgres2:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_USER: testuser
+      POSTGRES_DB: db2
+    ports: [ "5434:5432" ]
+    volumes:
+      - ./docker/init/db2:/docker-entrypoint-initdb.d
+
+  app:
+    build: .
+    depends_on: [ postgres1, postgres2 ]
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports: [ "8080:8080" ]
