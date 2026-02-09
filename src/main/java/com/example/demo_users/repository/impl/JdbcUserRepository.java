@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Repository
@@ -23,8 +22,7 @@ public class JdbcUserRepository implements UserRepository {
 
   private final AppProperties props;
   private final JdbcTemplateFactory factory;
-  private final ExecutorService pool
-    = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+  private final ExecutorService pool;
 
   @Override
   public List<UserDto> findAllFromAllSources() {
